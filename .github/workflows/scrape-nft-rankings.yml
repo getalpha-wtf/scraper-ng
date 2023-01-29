@@ -1,0 +1,20 @@
+name: Scrape Nft Rankings
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */12 * * *"
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: yarn
+      - run: yarn install --silent --no-progress --non-interactive --frozen-lockfile
+      - run: yarn workspace @getalpha-scraper/opensea-rankings start
+        env:
+          DB_URI: ${{ secrets.DB_URI }}

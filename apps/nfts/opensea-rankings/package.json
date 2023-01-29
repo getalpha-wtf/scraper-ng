@@ -1,0 +1,16 @@
+{
+  "name": "@getalpha-scraper/opensea-rankings",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "opensea-scraper": "^6.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "@getalpha-scraper/update-nft-stats": "*"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
