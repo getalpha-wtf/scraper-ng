@@ -10,5 +10,8 @@
   "scripts": {
     "postinstall": "scripts/post-install.sh"
   },
-  "force": true
+  "force": true,
+  "dependencies": {
+    "webpack": "^5.0.0"
+  }
 }
