@@ -34,22 +34,3 @@ module.exports = {
   db,
   Coin,
 };
-
-// @Column('decimal', { default: 0 })
-// priceChangeTwentyFourHour: number;
-
-// @Column('decimal', { default: 0 })
-// priceChangePercentageTwentyFourHour: number;
-
-// @Column('decimal', { array: true })
-// priceActionTwentyFourHour: number[];
-
-// @Column('decimal', { array: true, nullable: true })
-// priceActionSevenDays: number[];
-
-// @Column('decimal', { default: 0 })
-// @Index({ background: true })
-// marketCap: number;
-
-// @Column('decimal', { default: 0 })
-// marketCapRank: number;

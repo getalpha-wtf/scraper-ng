@@ -9,7 +9,7 @@ const { Op } = require("sequelize");
     await db.authenticate();
     await db.sync({ force: false, alter: true });
 
-    const r = await Axios.get(
+    const coinEntries = await Axios.get(
       "https://api.coingecko.com/api/v3/coins/markets",
       {
         params: {
@@ -39,16 +39,22 @@ const { Op } = require("sequelize");
         }))
       );
 
-    const result = await Coin.bulkCreate(r, { updateOnDuplicate: ["id"] });
-    const insertCount = result.filter((r) => r.isNewRecord).length;
-    const updateCount = result.length - insertCount;
-    console.log(`${insertCount} added and ${updateCount} updated`);
+      
+    const ids = []
+    for (const coinEntry of coinEntries) {
+      try {
+        await Coin.upsert(coinEntry, {conflictFields: ["id"]})
+        console.log(`Upserted ${coinEntry.id}`)
+      } catch (error) {
+        console.error(`FAILED=${coinEntry.id}\nERROR=${error.stack}`)
+      } finally {
+        ids.push(coinEntry.id)
+      }
+    }
 
-    const ids = r.map((r) => r.id);
     const deleteCount = await Coin.destroy({
       where: { id: { [Op.notIn]: ids } },
     });
-
     console.log(`${deleteCount} purged`);
   } catch (e) {
     console.error(e.stack);
